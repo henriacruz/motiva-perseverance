@@ -61,7 +61,7 @@
         "type": "function",
         "z": "flow_mock",
         "name": "Mock Telemetria",
-        "func": "function rand(min, max) { return Math.random() * (max - min) + min; }\n\n// Rodovia Anhanguera SP-330 — segmento ~km 70 (Jundiaí), bearing ~310°\nvar route = [[-23.215,-46.87],[-23.2147,-46.8704],[-23.2143,-46.8709],[-23.214,-46.8713],[-23.2136,-46.8718],[-23.2133,-46.8722],[-23.2129,-46.8727],[-23.2126,-46.8731],[-23.2122,-46.8736],[-23.2119,-46.874],[-23.2115,-46.8745],[-23.2112,-46.8749],[-23.2108,-46.8754],[-23.2105,-46.8758],[-23.2101,-46.8763],[-23.2098,-46.8767],[-23.2094,-46.8772],[-23.2091,-46.8776],[-23.2087,-46.8781],[-23.2084,-46.8785],[-23.208,-46.879],[-23.2077,-46.8794],[-23.2073,-46.8799],[-23.207,-46.8803],[-23.2066,-46.8808],[-23.2063,-46.8812],[-23.2059,-46.8817],[-23.2056,-46.8821],[-23.2052,-46.8826],[-23.2049,-46.883],[-23.2045,-46.8835],[-23.2042,-46.8839],[-23.2038,-46.8844],[-23.2035,-46.8848],[-23.2031,-46.8853],[-23.2028,-46.8857],[-23.2024,-46.8862],[-23.2021,-46.8866],[-23.2017,-46.8871],[-23.2014,-46.8875]];\n\nvar idx = flow.get('routeIdx') || 0;\nvar pt  = route[idx];\nflow.set('routeIdx', (idx + 1) % route.length);\n\nvar v = parseFloat(rand(11.1, 12.6).toFixed(2));\nvar i = parseFloat(rand(0.5, 7.5).toFixed(3));\nmsg.payload = {\n    lat:     parseFloat((pt[0] + rand(-0.00003, 0.00003)).toFixed(6)),\n    lon:     parseFloat((pt[1] + rand(-0.00003, 0.00003)).toFixed(6)),\n    roll:    parseFloat(rand(-4, 4).toFixed(2)),\n    pitch:   parseFloat(rand(-2, 2).toFixed(2)),\n    yaw:     parseFloat((310 + rand(-5, 5)).toFixed(1)),\n    d_front: Math.max(10, Math.round(rand(80, 400))),\n    d_rear:  Math.max(10, Math.round(rand(80, 400))),\n    d_left:  Math.max(5,  Math.round(rand(15, 60))),\n    d_right: Math.max(5,  Math.round(rand(15, 60))),\n    voltage: v,\n    current: i,\n    power:   parseFloat((v * i).toFixed(2))\n};\nreturn msg;",
+        "func": "function rand(min, max) { return Math.random() * (max - min) + min; }\n\n// Rodovia Anhanguera SP-330 — segmento ~km 70 (Jundiaí), bearing ~310°\nvar route = [[-23.215,-46.87],[-23.2147,-46.8704],[-23.2143,-46.8709],[-23.214,-46.8713],[-23.2136,-46.8718],[-23.2133,-46.8722],[-23.2129,-46.8727],[-23.2126,-46.8731],[-23.2122,-46.8736],[-23.2119,-46.874],[-23.2115,-46.8745],[-23.2112,-46.8749],[-23.2108,-46.8754],[-23.2105,-46.8758],[-23.2101,-46.8763],[-23.2098,-46.8767],[-23.2094,-46.8772],[-23.2091,-46.8776],[-23.2087,-46.8781],[-23.2084,-46.8785],[-23.208,-46.879],[-23.2077,-46.8794],[-23.2073,-46.8799],[-23.207,-46.8803],[-23.2066,-46.8808],[-23.2063,-46.8812],[-23.2059,-46.8817],[-23.2056,-46.8821],[-23.2052,-46.8826],[-23.2049,-46.883],[-23.2045,-46.8835],[-23.2042,-46.8839],[-23.2038,-46.8844],[-23.2035,-46.8848],[-23.2031,-46.8853],[-23.2028,-46.8857],[-23.2024,-46.8862],[-23.2021,-46.8866],[-23.2017,-46.8871],[-23.2014,-46.8875]];\n\nvar idx = flow.get('routeIdx') || 0;\nvar pt  = route[idx];\nflow.set('routeIdx', (idx + 1) % route.length);\n\n// Velocidade e área roçada (largura de corte 1.5 m)\nvar vel  = parseFloat((Math.random() * 1.5 + 0.5).toFixed(1));\nvar area = parseFloat(flow.get('area') || 0);\narea = parseFloat((area + vel * 2 * 1.5).toFixed(1));\nflow.set('area', area);\n\nvar v = parseFloat(rand(11.1, 12.6).toFixed(2));\nvar i = parseFloat(rand(0.5, 7.5).toFixed(3));\nmsg.payload = {\n    lat:     parseFloat((pt[0] + rand(-0.00003, 0.00003)).toFixed(6)),\n    lon:     parseFloat((pt[1] + rand(-0.00003, 0.00003)).toFixed(6)),\n    roll:    parseFloat(rand(-4, 4).toFixed(2)),\n    pitch:   parseFloat(rand(-2, 2).toFixed(2)),\n    yaw:     parseFloat((310 + rand(-5, 5)).toFixed(1)),\n    d_front: Math.max(10, Math.round(rand(80, 400))),\n    d_rear:  Math.max(10, Math.round(rand(80, 400))),\n    d_left:  Math.max(5,  Math.round(rand(15, 60))),\n    d_right: Math.max(5,  Math.round(rand(15, 60))),\n    velocity: vel,\n    area:     Math.round(area),\n    voltage: v,\n    current: i,\n    power:   parseFloat((v * i).toFixed(2))\n};\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -80,7 +80,7 @@
         "type": "function",
         "z": "flow_mock",
         "name": "Mock Status",
-        "func": "var modes = ['MANUAL', 'SEMI-AUTO'];\nvar alertas = [\n    'Nenhum alerta',\n    'Nenhum alerta',\n    'Nenhum alerta',\n    'Bateria baixa!',\n    'Obstáculo frontal < 30 cm'\n];\nmsg.payload = {\n    mode: modes[Math.round(Math.random())],\n    battery: Math.round(Math.random() * 60 + 40),\n    alert: alertas[Math.floor(Math.random() * alertas.length)]\n};\nreturn msg;",
+        "func": "var modes   = ['MANUAL', 'SEMI-AUTO'];\nvar alertas = [\n    'Nenhum alerta', 'Nenhum alerta', 'Nenhum alerta',\n    'Bateria baixa!', 'Obstáculo frontal < 30 cm'\n];\nmsg.payload = {\n    mode:      modes[Math.round(Math.random())],\n    battery:   Math.round(Math.random() * 60 + 40),\n    alert:     alertas[Math.floor(Math.random() * alertas.length)],\n    connected: Math.random() > 0.15,\n    cutting:   Math.random() > 0.2\n};\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -398,7 +398,7 @@
         "page": "mp_page1",
         "width": 5,
         "height": "auto",
-        "order": 6,
+        "order": 7,
         "showTitle": false
     },
     {
@@ -621,7 +621,8 @@
                 "tmpl_dist",
                 "tmpl_energy",
                 "tmpl_map",
-                "ws_out_map"
+                "ws_out_map",
+                "tmpl_oper"
             ]
         ]
     },
@@ -745,7 +746,7 @@
         "order": 1,
         "width": 3,
         "height": 5,
-        "format": "<template>\n  <div class=\"status-c\">\n    <div class=\"c-title\"><v-icon>mdi-robot</v-icon> Sistema &mdash; Status</div>\n    <div v-if=\"msg && msg.payload\">\n      <div class=\"mode-badge\"\n        :style=\"{background:msg.payload.mode==='MANUAL'?'rgba(116,192,252,.2)':'rgba(167,139,250,.2)',\n                 borderColor:msg.payload.mode==='MANUAL'?'#74c0fc':'#a78bfa'}\">\n        <v-icon :size=\"16\" :icon=\"msg.payload.mode==='MANUAL'?'mdi-gamepad-variant':'mdi-robot-outline'\"></v-icon>\n        {{ msg.payload.mode }}\n      </div>\n      <div class=\"batt-wrap\">\n        <div class=\"batt-head\">\n          <v-icon :size=\"18\"\n            :color=\"msg.payload.battery<20?'#ff6b6b':msg.payload.battery<50?'#ffd43b':'#69db7c'\">\n            mdi-battery\n          </v-icon>\n          <span style=\"font-size:13px\">Bateria</span>\n          <span class=\"batt-pct\">{{ msg.payload.battery }}%</span>\n        </div>\n        <div class=\"batt-bg\">\n          <div class=\"batt-fill\"\n            :style=\"{width:msg.payload.battery+'%',\n                     background:msg.payload.battery<20?'#ff6b6b':msg.payload.battery<50?'#ffd43b':'#69db7c'}\">\n          </div>\n        </div>\n      </div>\n      <div class=\"alert-box\"\n        :style=\"{borderColor:msg.payload.alert!=='Nenhum alerta'?'#ff6b6b':'#69db7c',\n                 background:msg.payload.alert!=='Nenhum alerta'?'rgba(255,107,107,.1)':'rgba(105,219,124,.1)'}\">\n        <v-icon :size=\"16\"\n          :color=\"msg.payload.alert!=='Nenhum alerta'?'#ff6b6b':'#69db7c'\"\n          :icon=\"msg.payload.alert!=='Nenhum alerta'?'mdi-alert':'mdi-check-circle'\">\n        </v-icon>\n        {{ msg.payload.alert }}\n      </div>\n    </div>\n    <div v-else class=\"c-wait\">&#x23F3; Aguardando status...</div>\n  </div>\n</template>\n<style>\n.status-c{background:linear-gradient(160deg,#1a1a2e,#0d2137);border-left:4px solid #a78bfa;border-radius:12px;padding:16px;color:#fff;min-height:130px}\n.status-c .c-title{font-size:13px;font-weight:600;opacity:.8;margin-bottom:14px;display:flex;align-items:center;gap:6px}\n.mode-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;border:1px solid;font-size:13px;font-weight:600;margin-bottom:12px}\n.batt-wrap{margin-bottom:12px}\n.batt-head{display:flex;align-items:center;gap:6px;margin-bottom:6px}\n.batt-pct{margin-left:auto;font-weight:700;font-size:13px}\n.batt-bg{background:rgba(255,255,255,.1);border-radius:6px;height:10px;overflow:hidden}\n.batt-fill{height:100%;border-radius:6px;transition:width .5s ease,background .3s}\n.alert-box{padding:8px 10px;border-radius:8px;border:1px solid;font-size:12px;display:flex;align-items:center;gap:6px}\n.status-c .c-wait{opacity:.5;font-size:13px;text-align:center;margin-top:20px}\n</style>",
+        "format": "<template>\n  <div class=\"status-c\">\n    <div class=\"c-title\"><v-icon>mdi-robot</v-icon> Sistema &mdash; Status</div>\n    <div v-if=\"msg && msg.payload\">\n      <div class=\"mode-badge\"\n        :style=\"{background:msg.payload.mode==='MANUAL'?'rgba(116,192,252,.2)':'rgba(167,139,250,.2)',\n                 borderColor:msg.payload.mode==='MANUAL'?'#74c0fc':'#a78bfa'}\">\n        <v-icon :size=\"16\" :icon=\"msg.payload.mode==='MANUAL'?'mdi-gamepad-variant':'mdi-robot-outline'\"></v-icon>\n        {{ msg.payload.mode }}\n      </div>\n      <div class=\"conn-row\"\n        :style=\"{borderColor:msg.payload.connected?'#69db7c':'#ff6b6b',\n                 background:msg.payload.connected?'rgba(105,219,124,.08)':'rgba(255,107,107,.08)'}\"\n      >\n        <span class=\"conn-dot\" :style=\"{background:msg.payload.connected?'#69db7c':'#ff6b6b'}\"></span>\n        <v-icon :size=\"14\" :color=\"msg.payload.connected?'#69db7c':'#ff6b6b'\"\n          :icon=\"msg.payload.connected?'mdi-wifi':'mdi-wifi-off'\"></v-icon>\n        <span :style=\"{color:msg.payload.connected?'#69db7c':'#ff6b6b',fontWeight:600,fontSize:'12px'}\">\n          {{ msg.payload.connected ? 'Online' : 'Offline' }}\n        </span>\n        <span style=\"margin-left:auto;font-size:10px;opacity:.5\">MQTT</span>\n      </div>\n      <div class=\"conn-row\"\n        :style=\"{borderColor:msg.payload.cutting?'#ffd43b':'rgba(255,255,255,.2)',\n                 background:msg.payload.cutting?'rgba(255,212,59,.08)':'rgba(255,255,255,.04)'}\"\n      >\n        <v-icon :size=\"15\" :color=\"msg.payload.cutting?'#ffd43b':'rgba(255,255,255,.35)'\"\n          :icon=\"msg.payload.cutting?'mdi-scissors-cutting':'mdi-scissors-cutting'\"></v-icon>\n        <span :style=\"{color:msg.payload.cutting?'#ffd43b':'rgba(255,255,255,.35)',fontWeight:600,fontSize:'12px'}\">\n          Corte: {{ msg.payload.cutting ? 'Ativo' : 'Inativo' }}\n        </span>\n        <span style=\"margin-left:auto;font-size:10px;opacity:.4\">lâminas</span>\n      </div>\n      <div class=\"batt-wrap\">\n        <div class=\"batt-head\">\n          <v-icon :size=\"18\"\n            :color=\"msg.payload.battery<20?'#ff6b6b':msg.payload.battery<50?'#ffd43b':'#69db7c'\">\n            mdi-battery\n          </v-icon>\n          <span style=\"font-size:13px\">Bateria</span>\n          <span class=\"batt-pct\">{{ msg.payload.battery }}%</span>\n        </div>\n        <div class=\"batt-bg\">\n          <div class=\"batt-fill\"\n            :style=\"{width:msg.payload.battery+'%',\n                     background:msg.payload.battery<20?'#ff6b6b':msg.payload.battery<50?'#ffd43b':'#69db7c'}\">\n          </div>\n        </div>\n      </div>\n      <div class=\"alert-box\"\n        :style=\"{borderColor:msg.payload.alert!=='Nenhum alerta'?'#ff6b6b':'#69db7c',\n                 background:msg.payload.alert!=='Nenhum alerta'?'rgba(255,107,107,.1)':'rgba(105,219,124,.1)'}\">\n        <v-icon :size=\"16\"\n          :color=\"msg.payload.alert!=='Nenhum alerta'?'#ff6b6b':'#69db7c'\"\n          :icon=\"msg.payload.alert!=='Nenhum alerta'?'mdi-alert':'mdi-check-circle'\">\n        </v-icon>\n        {{ msg.payload.alert }}\n      </div>\n    </div>\n    <div v-else class=\"c-wait\">&#x23F3; Aguardando status...</div>\n  </div>\n</template>\n<style>\n.status-c{background:linear-gradient(160deg,#1a1a2e,#0d2137);border-left:4px solid #a78bfa;border-radius:12px;padding:16px;color:#fff;min-height:130px}\n.status-c .c-title{font-size:13px;font-weight:600;opacity:.8;margin-bottom:14px;display:flex;align-items:center;gap:6px}\n.mode-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;border:1px solid;font-size:13px;font-weight:600;margin-bottom:12px}\n.batt-wrap{margin-bottom:12px}\n.batt-head{display:flex;align-items:center;gap:6px;margin-bottom:6px}\n.batt-pct{margin-left:auto;font-weight:700;font-size:13px}\n.batt-bg{background:rgba(255,255,255,.1);border-radius:6px;height:10px;overflow:hidden}\n.batt-fill{height:100%;border-radius:6px;transition:width .5s ease,background .3s}\n.alert-box{padding:8px 10px;border-radius:8px;border:1px solid;font-size:12px;display:flex;align-items:center;gap:6px}\n.status-c .c-wait{opacity:.5;font-size:13px;text-align:center;margin-top:20px}\n.conn-row{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:8px;border:1px solid;margin-bottom:10px;font-size:12px}\n.conn-dot{width:7px;height:7px;border-radius:50%;animation:pulse 1.5s infinite}\n@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}\n</style>",
         "storeOutMessages": true,
         "passthru": false,
         "templateScope": "local",
@@ -763,7 +764,7 @@
         "page": "mp_page1",
         "width": 7,
         "height": "auto",
-        "order": 7,
+        "order": 8,
         "showTitle": false
     },
     {
@@ -846,5 +847,35 @@
         "x": 620,
         "y": 1180,
         "wires": []
+    },
+    {
+        "id": "grp_oper",
+        "type": "ui-group",
+        "name": "Operação",
+        "page": "mp_page1",
+        "width": 12,
+        "height": "auto",
+        "order": 6,
+        "showTitle": false
+    },
+    {
+        "id": "tmpl_oper",
+        "type": "ui-template",
+        "z": "flow_mock",
+        "group": "grp_oper",
+        "name": "Card Operação",
+        "order": 1,
+        "width": 12,
+        "height": 4,
+        "templateScope": "local",
+        "storeOutMessages": true,
+        "passthru": false,
+        "className": "",
+        "format": "<template>\n  <div class=\"oper-c\">\n    <div class=\"c-title\"><v-icon>mdi-chart-timeline-variant</v-icon> Opera&ccedil;&atilde;o</div>\n    <div v-if=\"msg && msg.payload\" class=\"oper-row\">\n\n      <div class=\"oper-item\">\n        <v-icon :size=\"32\" color=\"#74c0fc\">mdi-speedometer</v-icon>\n        <div class=\"oper-val\" style=\"color:#74c0fc\">\n          {{ msg.payload.velocity }}<span class=\"oper-unit\"> m/s</span>\n        </div>\n        <div class=\"oper-lbl\">Velocidade</div>\n      </div>\n\n      <div class=\"oper-sep\"></div>\n\n      <div class=\"oper-item\">\n        <v-icon :size=\"32\" color=\"#69db7c\">mdi-grass</v-icon>\n        <div class=\"oper-val\" style=\"color:#69db7c\">\n          {{ msg.payload.area.toLocaleString('pt-BR') }}<span class=\"oper-unit\"> m&sup2;</span>\n        </div>\n        <div class=\"oper-lbl\">&Aacute;rea Ro&ccedil;ada</div>\n      </div>\n\n      <div class=\"oper-sep\"></div>\n\n      <div class=\"oper-item\">\n        <v-icon :size=\"32\" :color=\"msg.payload.power>100?'#ff6b6b':'#ffd43b'\">mdi-lightning-bolt</v-icon>\n        <div class=\"oper-val\" :style=\"{color:msg.payload.power>100?'#ff6b6b':'#ffd43b'}\">\n          {{ msg.payload.power }}<span class=\"oper-unit\"> W</span>\n        </div>\n        <div class=\"oper-lbl\">Consumo</div>\n      </div>\n\n    </div>\n    <div v-else class=\"c-wait\">&#x23F3; Aguardando...</div>\n  </div>\n</template>\n<style>\n.oper-c{background:linear-gradient(160deg,#12122a,#1a1a2e);border-left:4px solid #a78bfa;border-radius:12px;padding:14px 20px;color:#fff}\n.oper-c .c-title{font-size:13px;font-weight:600;opacity:.8;margin-bottom:12px;display:flex;align-items:center;gap:6px}\n.oper-row{display:flex;justify-content:space-around;align-items:center}\n.oper-item{text-align:center;flex:1;padding:4px 0}\n.oper-sep{width:1px;height:60px;background:rgba(255,255,255,.1)}\n.oper-val{font-size:28px;font-weight:700;margin:6px 0 2px;line-height:1}\n.oper-unit{font-size:13px;opacity:.7;font-weight:400}\n.oper-lbl{font-size:10px;opacity:.55;text-transform:uppercase;letter-spacing:.06em}\n.oper-c .c-wait{opacity:.5;font-size:13px;text-align:center;margin-top:10px}\n</style>",
+        "x": 880,
+        "y": 1120,
+        "wires": [
+            []
+        ]
     }
 ]
