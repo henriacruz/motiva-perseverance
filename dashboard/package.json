@@ -1,0 +1,12 @@
+{
+  "name": "motiva-perseverance-dashboard",
+  "version": "0.1.0",
+  "description": "Node-RED dashboard para telemetria do Motiva Perseverance",
+  "scripts": {
+    "start": "node-red -u . -p 1880"
+  },
+  "dependencies": {
+    "@flowfuse/node-red-dashboard": "^1.0.0",
+    "node-red-contrib-telegrambot": "^16.0.0"
+  }
+}
