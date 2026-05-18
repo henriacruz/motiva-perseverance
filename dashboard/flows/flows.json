@@ -374,9 +374,9 @@
         "type": "ui-group",
         "name": "GPS — NEO-6M",
         "page": "mp_page1",
-        "width": 3,
+        "width": 5,
         "height": "auto",
-        "order": 2,
+        "order": 7,
         "showTitle": false,
         "visible": true,
         "disabled": false
@@ -396,9 +396,9 @@
         "type": "ui-group",
         "name": "Distâncias — HC-SR04 (cm)",
         "page": "mp_page1",
-        "width": 5,
+        "width": 3,
         "height": "auto",
-        "order": 7,
+        "order": 2,
         "showTitle": false
     },
     {
@@ -775,12 +775,12 @@
         "name": "Card Mapa",
         "order": 1,
         "width": 7,
-        "height": 10,
+        "height": 6,
         "templateScope": "local",
         "storeOutMessages": true,
         "passthru": false,
         "className": "",
-        "format": "<template>\n  <div class=\"map-c\">\n    <div class=\"c-title\">\n      <v-icon>mdi-map-marker-radius</v-icon> Mapa &mdash; Posi&ccedil;&atilde;o GPS\n    </div>\n    <iframe src=\"/rover-map\" class=\"map-iframe\" allowfullscreen></iframe>\n    <div v-if=\"msg && msg.payload\" class=\"map-coords\">\n      &#x1F4CD; {{ msg.payload.lat }}, {{ msg.payload.lon }}\n    </div>\n  </div>\n</template>\n<style>\n.map-c { background: linear-gradient(160deg,#0d2137,#1a1a2e);\n         border-left: 4px solid #74c0fc; border-radius: 12px;\n         padding: 16px; color: #fff; }\n.map-c .c-title { font-size:13px; font-weight:600; opacity:.8;\n                  margin-bottom:10px; display:flex; align-items:center; gap:6px; }\n.map-iframe { width: 100%; height: 340px; border: none; border-radius: 10px; display: block; }\n.map-coords { font-size: 11px; opacity:.55; margin-top: 6px; text-align: center; }\n</style>",
+        "format": "<template>\n  <div class=\"map-c\">\n    <div class=\"c-title\">\n      <v-icon>mdi-map-marker-radius</v-icon> Mapa &mdash; Posi&ccedil;&atilde;o GPS\n    </div>\n    <iframe src=\"/rover-map\" class=\"map-iframe\" allowfullscreen></iframe>\n    <div v-if=\"msg && msg.payload\" class=\"map-coords\">\n      &#x1F4CD; {{ msg.payload.lat }}, {{ msg.payload.lon }}\n    </div>\n  </div>\n</template>\n<style>\n.map-c { background: linear-gradient(160deg,#0d2137,#1a1a2e);\n         border-left: 4px solid #74c0fc; border-radius: 12px;\n         padding: 16px; color: #fff; }\n.map-c .c-title { font-size:13px; font-weight:600; opacity:.8;\n                  margin-bottom:10px; display:flex; align-items:center; gap:6px; }\n.map-iframe { width: 100%; height: 480px; border: none; border-radius: 10px; display: block; }\n.map-coords { font-size: 11px; opacity:.55; margin-top: 6px; text-align: center; }\n</style>",
         "x": 880,
         "y": 1060,
         "wires": [
