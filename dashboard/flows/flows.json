@@ -7,6 +7,164 @@
         "info": "Dashboard com dados mockados - Motiva Perseverance"
     },
     {
+        "type": "comment",
+        "z": "flow_mock",
+        "info": "",
+        "wires": [],
+        "id": "cmt_config",
+        "name": "⚙️  Configuração — ui-base, page, theme, MQTT broker, Telegram bot",
+        "x": 60,
+        "y": 40
+    },
+    {
+        "id": "fb026497e3258b13",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "https://fav.farm/🤖",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": true
+    },
+    {
+        "id": "mp_page1",
+        "type": "ui-page",
+        "name": "Motiva Rover",
+        "ui": "fb026497e3258b13",
+        "path": "/motiva",
+        "icon": "mdi-satellite-uplink",
+        "layout": "grid",
+        "theme": "theme_enki",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "theme_enki",
+        "type": "ui-theme",
+        "name": "Henri Dark",
+        "colors": {
+            "surface": "#1f2937",
+            "primary": "#0094ce",
+            "bgPage": "#111827",
+            "groupBg": "#374151",
+            "groupOutline": "#4b5563"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "8px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "8f5450163a94428d",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "@flowfuse/node-red-dashboard": "1.30.2",
+            "node-red-contrib-telegrambot": "17.4.5"
+        }
+    },
+    {
+        "id": "aaf1a9af4ea2ff0d",
+        "type": "mqtt-broker",
+        "name": "MQTT HiveMQ",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "86082f33536f26e2",
+        "type": "telegram bot",
+        "botname": "MotivaRoverBot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "testenvironment": false,
+        "updatemode": "polling",
+        "pollinterval": 300,
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": 6667,
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbothost": "0.0.0.0",
+        "localbotport": 8443,
+        "publicbotport": 8443,
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
+        "type": "comment",
+        "z": "flow_mock",
+        "info": "",
+        "wires": [],
+        "id": "cmt_mock",
+        "name": "🎲  Mock / Simulação — inject + function + mqtt out",
+        "x": 60,
+        "y": 220
+    },
+    {
         "id": "inj_telem",
         "type": "inject",
         "z": "flow_mock",
@@ -30,6 +188,43 @@
                 "fn_telem"
             ]
         ]
+    },
+    {
+        "id": "fn_telem",
+        "type": "function",
+        "z": "flow_mock",
+        "name": "Mock Telemetria",
+        "func": "function rand(min, max) { return Math.random() * (max - min) + min; }\n\n// Rodovia Anhanguera SP-330 — segmento ~km 70 (Jundiaí), bearing ~310°\nvar route = [[-23.215,-46.87],[-23.2147,-46.8704],[-23.2143,-46.8709],[-23.214,-46.8713],[-23.2136,-46.8718],[-23.2133,-46.8722],[-23.2129,-46.8727],[-23.2126,-46.8731],[-23.2122,-46.8736],[-23.2119,-46.874],[-23.2115,-46.8745],[-23.2112,-46.8749],[-23.2108,-46.8754],[-23.2105,-46.8758],[-23.2101,-46.8763],[-23.2098,-46.8767],[-23.2094,-46.8772],[-23.2091,-46.8776],[-23.2087,-46.8781],[-23.2084,-46.8785],[-23.208,-46.879],[-23.2077,-46.8794],[-23.2073,-46.8799],[-23.207,-46.8803],[-23.2066,-46.8808],[-23.2063,-46.8812],[-23.2059,-46.8817],[-23.2056,-46.8821],[-23.2052,-46.8826],[-23.2049,-46.883],[-23.2045,-46.8835],[-23.2042,-46.8839],[-23.2038,-46.8844],[-23.2035,-46.8848],[-23.2031,-46.8853],[-23.2028,-46.8857],[-23.2024,-46.8862],[-23.2021,-46.8866],[-23.2017,-46.8871],[-23.2014,-46.8875]];\n\nvar idx = flow.get('routeIdx') || 0;\nvar pt  = route[idx];\nflow.set('routeIdx', (idx + 1) % route.length);\n\n// Velocidade e área roçada (largura de corte 1.5 m)\nvar vel  = parseFloat((Math.random() * 1.5 + 0.5).toFixed(1));\nvar area = parseFloat(flow.get('area') || 0);\narea = parseFloat((area + vel * 2 * 1.5).toFixed(1));\nflow.set('area', area);\n\nvar v = parseFloat(rand(11.1, 12.6).toFixed(2));\nvar i = parseFloat(rand(0.5, 7.5).toFixed(3));\nmsg.payload = {\n    lat:     parseFloat((pt[0] + rand(-0.00003, 0.00003)).toFixed(6)),\n    lon:     parseFloat((pt[1] + rand(-0.00003, 0.00003)).toFixed(6)),\n    roll:    parseFloat(rand(-4, 4).toFixed(2)),\n    pitch:   parseFloat(rand(-2, 2).toFixed(2)),\n    yaw:     parseFloat((310 + rand(-5, 5)).toFixed(1)),\n    d_front: Math.max(10, Math.round(rand(80, 400))),\n    d_rear:  Math.max(10, Math.round(rand(80, 400))),\n    d_left:  Math.max(5,  Math.round(rand(15, 60))),\n    d_right: Math.max(5,  Math.round(rand(15, 60))),\n    velocity: vel,\n    area:     Math.round(area),\n    voltage: v,\n    current: i,\n    power:   parseFloat((v * i).toFixed(2)),\n    rodovia:  'SP-330 — Anhanguera',\n    endereco: 'Rod. Anhanguera, km ' + (70 + parseFloat((idx * 2.4 / route.length).toFixed(1))),\n    cidade:   'Jundiaí',\n    estado:   'São Paulo'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 340,
+        "wires": [
+            [
+                "mqtt_out_telem"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_out_telem",
+        "type": "mqtt out",
+        "z": "flow_mock",
+        "name": "Pub Telemetria",
+        "topic": "perseverance/telemetry",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "aaf1a9af4ea2ff0d",
+        "x": 640,
+        "y": 340,
+        "wires": []
     },
     {
         "id": "inj_status",
@@ -57,25 +252,6 @@
         ]
     },
     {
-        "id": "fn_telem",
-        "type": "function",
-        "z": "flow_mock",
-        "name": "Mock Telemetria",
-        "func": "function rand(min, max) { return Math.random() * (max - min) + min; }\n\n// Rodovia Anhanguera SP-330 — segmento ~km 70 (Jundiaí), bearing ~310°\nvar route = [[-23.215,-46.87],[-23.2147,-46.8704],[-23.2143,-46.8709],[-23.214,-46.8713],[-23.2136,-46.8718],[-23.2133,-46.8722],[-23.2129,-46.8727],[-23.2126,-46.8731],[-23.2122,-46.8736],[-23.2119,-46.874],[-23.2115,-46.8745],[-23.2112,-46.8749],[-23.2108,-46.8754],[-23.2105,-46.8758],[-23.2101,-46.8763],[-23.2098,-46.8767],[-23.2094,-46.8772],[-23.2091,-46.8776],[-23.2087,-46.8781],[-23.2084,-46.8785],[-23.208,-46.879],[-23.2077,-46.8794],[-23.2073,-46.8799],[-23.207,-46.8803],[-23.2066,-46.8808],[-23.2063,-46.8812],[-23.2059,-46.8817],[-23.2056,-46.8821],[-23.2052,-46.8826],[-23.2049,-46.883],[-23.2045,-46.8835],[-23.2042,-46.8839],[-23.2038,-46.8844],[-23.2035,-46.8848],[-23.2031,-46.8853],[-23.2028,-46.8857],[-23.2024,-46.8862],[-23.2021,-46.8866],[-23.2017,-46.8871],[-23.2014,-46.8875]];\n\nvar idx = flow.get('routeIdx') || 0;\nvar pt  = route[idx];\nflow.set('routeIdx', (idx + 1) % route.length);\n\n// Velocidade e área roçada (largura de corte 1.5 m)\nvar vel  = parseFloat((Math.random() * 1.5 + 0.5).toFixed(1));\nvar area = parseFloat(flow.get('area') || 0);\narea = parseFloat((area + vel * 2 * 1.5).toFixed(1));\nflow.set('area', area);\n\nvar v = parseFloat(rand(11.1, 12.6).toFixed(2));\nvar i = parseFloat(rand(0.5, 7.5).toFixed(3));\nmsg.payload = {\n    lat:     parseFloat((pt[0] + rand(-0.00003, 0.00003)).toFixed(6)),\n    lon:     parseFloat((pt[1] + rand(-0.00003, 0.00003)).toFixed(6)),\n    roll:    parseFloat(rand(-4, 4).toFixed(2)),\n    pitch:   parseFloat(rand(-2, 2).toFixed(2)),\n    yaw:     parseFloat((310 + rand(-5, 5)).toFixed(1)),\n    d_front: Math.max(10, Math.round(rand(80, 400))),\n    d_rear:  Math.max(10, Math.round(rand(80, 400))),\n    d_left:  Math.max(5,  Math.round(rand(15, 60))),\n    d_right: Math.max(5,  Math.round(rand(15, 60))),\n    velocity: vel,\n    area:     Math.round(area),\n    voltage: v,\n    current: i,\n    power:   parseFloat((v * i).toFixed(2))\n};\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 430,
-        "y": 340,
-        "wires": [
-            [
-                "mqtt_out_telem"
-            ]
-        ]
-    },
-    {
         "id": "fn_status",
         "type": "function",
         "z": "flow_mock",
@@ -93,6 +269,144 @@
                 "mqtt_out_status"
             ]
         ]
+    },
+    {
+        "id": "mqtt_out_status",
+        "type": "mqtt out",
+        "z": "flow_mock",
+        "name": "Pub Status",
+        "topic": "perseverance/status",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "aaf1a9af4ea2ff0d",
+        "x": 640,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "type": "comment",
+        "z": "flow_mock",
+        "info": "",
+        "wires": [],
+        "id": "cmt_sub",
+        "name": "📥  Subscriptions MQTT → Dashboard templates",
+        "x": 60,
+        "y": 500
+    },
+    {
+        "id": "mqtt_in_telem",
+        "type": "mqtt in",
+        "z": "flow_mock",
+        "name": "Sub Telemetria",
+        "topic": "perseverance/telemetry",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "aaf1a9af4ea2ff0d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 200,
+        "y": 520,
+        "wires": [
+            [
+                "tmpl_gps",
+                "tmpl_imu",
+                "tmpl_dist",
+                "tmpl_energy",
+                "tmpl_map",
+                "ws_out_map",
+                "tmpl_oper"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_in_status",
+        "type": "mqtt in",
+        "z": "flow_mock",
+        "name": "Sub Status",
+        "topic": "perseverance/status",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "aaf1a9af4ea2ff0d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 200,
+        "y": 1000,
+        "wires": [
+            [
+                "tmpl_status"
+            ]
+        ]
+    },
+    {
+        "id": "8f78fd64448fc181",
+        "type": "mqtt in",
+        "z": "flow_mock",
+        "name": "",
+        "topic": "perseverance/sensors",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "aaf1a9af4ea2ff0d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 420,
+        "wires": [
+            [
+                "1f7fb05304f97bdd"
+            ]
+        ]
+    },
+    {
+        "id": "1f7fb05304f97bdd",
+        "type": "debug",
+        "z": "flow_mock",
+        "name": "test mqtt",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 400,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "type": "comment",
+        "z": "flow_mock",
+        "info": "",
+        "wires": [],
+        "id": "cmt_hdr",
+        "name": "🖥️  Dashboard · Header",
+        "x": 60,
+        "y": 680
+    },
+    {
+        "id": "0dcc96db669d0d91",
+        "type": "ui-group",
+        "name": "Header",
+        "page": "mp_page1",
+        "width": 12,
+        "height": 2,
+        "order": 1,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
     },
     {
         "id": "66241cfc1efbbddc",
@@ -117,72 +431,327 @@
         ]
     },
     {
-        "id": "eafb290ca2da6f5b",
-        "type": "ui-markdown",
+        "type": "comment",
         "z": "flow_mock",
-        "group": "0dcc96db669d0d91",
-        "name": "Wokwi Link",
-        "order": 2,
-        "width": "3",
-        "height": "1",
-        "content": "[&#x1F517; <span style=\"color:white\">Simula&ccedil;&atilde;o Wokwi</span>](https://wokwi.com/projects/447367351663093761)",
+        "info": "",
+        "wires": [],
+        "id": "cmt_row1",
+        "name": "📊  Dashboard · Linha 1 — GPS / IMU / Distâncias / Energia / Sistema",
+        "x": 60,
+        "y": 840
+    },
+    {
+        "id": "grp_gps",
+        "type": "ui-group",
+        "name": "GPS — NEO-6M",
+        "page": "mp_page1",
+        "width": 6,
+        "height": "auto",
+        "order": 7,
+        "showTitle": false,
+        "visible": true,
+        "disabled": false
+    },
+    {
+        "id": "tmpl_gps",
+        "type": "ui-template",
+        "z": "flow_mock",
+        "group": "grp_gps",
+        "name": "Card GPS",
+        "order": 1,
+        "width": 3,
+        "height": 5,
+        "format": "<template>\n  <div class=\"gps-c\">\n    <div class=\"c-title\"><v-icon>mdi-map-marker-radius</v-icon> GPS &mdash; NEO-6M</div>\n    <div v-if=\"msg && msg.payload\">\n\n      <div class=\"gps-coords\">\n        <div class=\"gps-ci\">\n          <v-icon color=\"#74c0fc\" :size=\"22\">mdi-latitude</v-icon>\n          <div><div class=\"c-val\">{{ msg.payload.lat }}°</div><div class=\"c-lbl\">Latitude</div></div>\n        </div>\n        <div class=\"gps-sep\"></div>\n        <div class=\"gps-ci\">\n          <v-icon color=\"#74c0fc\" :size=\"22\">mdi-longitude</v-icon>\n          <div><div class=\"c-val\">{{ msg.payload.lon }}°</div><div class=\"c-lbl\">Longitude</div></div>\n        </div>\n      </div>\n\n      <div class=\"gps-grid\">\n        <div class=\"gps-item gps-full\">\n          <v-icon color=\"#ffd43b\" :size=\"13\">mdi-road</v-icon>\n          <span class=\"gi-lbl\">Rodovia</span>\n          <span class=\"gi-val\">{{ msg.payload.rodovia }}</span>\n        </div>\n        <div class=\"gps-item gps-full\">\n          <v-icon color=\"#a9e34b\" :size=\"13\">mdi-map-marker</v-icon>\n          <span class=\"gi-lbl\">Endereço</span>\n          <span class=\"gi-val\">{{ msg.payload.endereco }}</span>\n        </div>\n        <div class=\"gps-item\">\n          <v-icon color=\"#74c0fc\" :size=\"13\">mdi-city</v-icon>\n          <span class=\"gi-lbl\">Cidade</span>\n          <span class=\"gi-val\">{{ msg.payload.cidade }}</span>\n        </div>\n        <div class=\"gps-item\">\n          <v-icon color=\"#da77f2\" :size=\"13\">mdi-map</v-icon>\n          <span class=\"gi-lbl\">Estado</span>\n          <span class=\"gi-val\">{{ msg.payload.estado }}</span>\n        </div>\n      </div>\n\n    </div>\n    <div v-else class=\"c-wait\">&#x23F3; Aguardando GPS...</div>\n  </div>\n</template>\n<style>\n.gps-c{background:linear-gradient(160deg,#1e3a5f,#0d2137);border-left:4px solid #74c0fc;border-radius:12px;padding:16px;color:#fff}\n.gps-c .c-title{font-size:13px;font-weight:600;opacity:.8;margin-bottom:14px;display:flex;align-items:center;gap:6px}\n.gps-coords{display:flex;align-items:center;margin-bottom:10px;background:rgba(116,192,252,.07);border-radius:8px;padding:8px 10px}\n.gps-ci{display:flex;align-items:center;gap:8px;flex:1}\n.gps-sep{width:1px;height:34px;background:rgba(255,255,255,.12);margin:0 10px}\n.gps-c .c-val{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}\n.gps-c .c-lbl{font-size:10px;opacity:.55;text-transform:uppercase;letter-spacing:.06em}\n.gps-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}\n.gps-item{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.04);border-radius:6px;padding:5px 8px;min-width:0}\n.gps-full{grid-column:1/-1}\n.gi-lbl{font-size:10px;opacity:.5;text-transform:uppercase;white-space:nowrap;flex-shrink:0}\n.gi-val{font-size:12px;font-weight:600;margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.gps-c .c-wait{opacity:.5;font-size:13px;text-align:center;margin-top:20px}\n</style>",
+        "storeOutMessages": true,
+        "passthru": false,
+        "templateScope": "local",
         "className": "",
-        "x": 150,
-        "y": 100,
+        "x": 880,
+        "y": 220,
         "wires": [
             []
         ]
     },
     {
-        "id": "ab68aa8bcb722f90",
-        "type": "ui-markdown",
-        "z": "flow_mock",
-        "group": "0dcc96db669d0d91",
-        "name": "GitHub Link",
-        "order": 4,
-        "width": "3",
-        "height": "1",
-        "content": "[&#x1F4F2; <span style=\"color:white\">GitHub</span>](https://github.com/henri-engineer/motiva-perseverance)",
-        "className": "",
-        "x": 310,
-        "y": 100,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "75225c7702f750af",
-        "type": "ui-markdown",
-        "z": "flow_mock",
-        "group": "0dcc96db669d0d91",
-        "name": "Bot Link",
-        "order": 5,
-        "width": "3",
-        "height": "1",
-        "content": "[&#x1F916; <span style=\"color:white\">Telegram Bot</span>](https://t.me/MotivaRoverBot)",
-        "className": "",
-        "x": 460,
-        "y": 100,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "e5fb195a811315f4",
-        "type": "ui-markdown",
-        "z": "flow_mock",
-        "group": "0dcc96db669d0d91",
-        "name": "README Link",
+        "id": "grp_imu",
+        "type": "ui-group",
+        "name": "IMU / Inclinação — MPU-6050",
+        "page": "mp_page1",
+        "width": 3,
+        "height": "auto",
         "order": 3,
-        "width": "3",
-        "height": "1",
-        "content": "[&#x1F4D1; <span style=\"color:white\">README</span>](https://github.com/henri-engineer/motiva-perseverance/blob/main/include/README.md)",
+        "showTitle": false
+    },
+    {
+        "id": "tmpl_imu",
+        "type": "ui-template",
+        "z": "flow_mock",
+        "group": "grp_imu",
+        "name": "Card IMU",
+        "order": 1,
+        "width": 3,
+        "height": 5,
+        "format": "<template>\n  <div class=\"imu-c\">\n    <div class=\"c-title\"><v-icon>mdi-rotate-3d-variant</v-icon> IMU &mdash; MPU-6050</div>\n    <div v-if=\"msg && msg.payload\" class=\"imu-row\">\n      <div class=\"imu-item\">\n        <v-icon :size=\"26\">mdi-axis-x-rotate-clockwise</v-icon>\n        <div class=\"imu-val\" :style=\"{color:Math.abs(parseFloat(msg.payload.roll))>20?'#ff6b6b':'#69db7c'}\">\n          {{ msg.payload.roll }}°\n        </div>\n        <div class=\"imu-lbl\">Roll</div>\n      </div>\n      <div class=\"imu-sep\"></div>\n      <div class=\"imu-item\">\n        <v-icon :size=\"26\">mdi-axis-y-rotate-clockwise</v-icon>\n        <div class=\"imu-val\" :style=\"{color:Math.abs(parseFloat(msg.payload.pitch))>20?'#ff6b6b':'#69db7c'}\">\n          {{ msg.payload.pitch }}°\n        </div>\n        <div class=\"imu-lbl\">Pitch</div>\n      </div>\n      <div class=\"imu-sep\"></div>\n      <div class=\"imu-item\">\n        <v-icon :size=\"26\">mdi-compass</v-icon>\n        <div class=\"imu-val\" style=\"color:#74c0fc\">{{ msg.payload.yaw }}°</div>\n        <div class=\"imu-lbl\">Yaw</div>\n      </div>\n    </div>\n    <div v-else class=\"c-wait\">&#x23F3; Aguardando IMU...</div>\n  </div>\n</template>\n<style>\n.imu-c{background:linear-gradient(160deg,#1a1a2e,#16213e);border-left:4px solid #a78bfa;border-radius:12px;padding:16px;color:#fff;min-height:130px}\n.imu-c .c-title{font-size:13px;font-weight:600;opacity:.8;margin-bottom:14px;display:flex;align-items:center;gap:6px}\n.imu-row{display:flex;justify-content:space-around;align-items:center;padding-top:4px}\n.imu-item{text-align:center;flex:1}\n.imu-sep{width:1px;height:48px;background:rgba(255,255,255,.1)}\n.imu-val{font-size:18px;font-weight:700;margin:4px 0 2px}\n.imu-lbl{font-size:10px;opacity:.55;text-transform:uppercase;letter-spacing:.06em}\n.imu-c .c-wait{opacity:.5;font-size:13px;text-align:center;margin-top:20px}\n</style>",
+        "storeOutMessages": true,
+        "passthru": false,
+        "templateScope": "local",
         "className": "",
-        "x": 620,
-        "y": 100,
+        "x": 880,
+        "y": 340,
         "wires": [
             []
         ]
+    },
+    {
+        "id": "grp_dist",
+        "type": "ui-group",
+        "name": "Distâncias — HC-SR04 (cm)",
+        "page": "mp_page1",
+        "width": 3,
+        "height": "auto",
+        "order": 2,
+        "showTitle": false
+    },
+    {
+        "id": "tmpl_dist",
+        "type": "ui-template",
+        "z": "flow_mock",
+        "group": "grp_dist",
+        "name": "Card Distâncias",
+        "order": 1,
+        "width": 5,
+        "height": 10,
+        "format": "<template>\n  <div class=\"dist-c\">\n    <div class=\"c-title\"><v-icon>mdi-radar</v-icon> Dist&acirc;ncias &mdash; HC-SR04</div>\n    <div v-if=\"msg && msg.payload\" class=\"dist-grid\">\n      <div></div>\n      <div :class=\"['dist-cell', (msg.payload.d_front<30?'dc-danger':msg.payload.d_front<80?'dc-warn':'dc-ok')]\">\n        <v-icon :size=\"20\">mdi-arrow-up-bold</v-icon>\n        <div class=\"dc-val\">{{ msg.payload.d_front }}<span class=\"dc-unit\"> cm</span></div>\n        <div class=\"dc-lbl\">Frontal</div>\n      </div>\n      <div></div>\n      <div :class=\"['dist-cell', (msg.payload.d_left<30?'dc-danger':msg.payload.d_left<80?'dc-warn':'dc-ok')]\">\n        <v-icon :size=\"20\">mdi-arrow-left-bold</v-icon>\n        <div class=\"dc-val\">{{ msg.payload.d_left }}<span class=\"dc-unit\"> cm</span></div>\n        <div class=\"dc-lbl\">Esq.</div>\n      </div>\n      <div class=\"rover-center\">&#x1F916;</div>\n      <div :class=\"['dist-cell', (msg.payload.d_right<30?'dc-danger':msg.payload.d_right<80?'dc-warn':'dc-ok')]\">\n        <v-icon :size=\"20\">mdi-arrow-right-bold</v-icon>\n        <div class=\"dc-val\">{{ msg.payload.d_right }}<span class=\"dc-unit\"> cm</span></div>\n        <div class=\"dc-lbl\">Dir.</div>\n      </div>\n      <div></div>\n      <div :class=\"['dist-cell', (msg.payload.d_rear<30?'dc-danger':msg.payload.d_rear<80?'dc-warn':'dc-ok')]\">\n        <v-icon :size=\"20\">mdi-arrow-down-bold</v-icon>\n        <div class=\"dc-val\">{{ msg.payload.d_rear }}<span class=\"dc-unit\"> cm</span></div>\n        <div class=\"dc-lbl\">Traseiro</div>\n      </div>\n      <div></div>\n    </div>\n    <div v-else class=\"c-wait\">&#x23F3; Aguardando sensores...</div>\n  </div>\n</template>\n<style>\n.dist-c{background:linear-gradient(160deg,#0d2137,#1a1a2e);border-left:4px solid #69db7c;border-radius:12px;padding:16px;color:#fff}\n.dist-c .c-title{font-size:13px;font-weight:600;opacity:.8;margin-bottom:14px;display:flex;align-items:center;gap:6px}\n.dist-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;max-width:400px;margin:0 auto}\n.dist-cell{text-align:center;padding:10px 6px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:3px}\n.dc-ok{background:rgba(105,219,124,.15);color:#69db7c}\n.dc-warn{background:rgba(255,212,59,.15);color:#ffd43b}\n.dc-danger{background:rgba(255,107,107,.2);color:#ff6b6b}\n.dc-val{font-size:18px;font-weight:700}\n.dc-unit{font-size:11px;opacity:.7}\n.dc-lbl{font-size:10px;opacity:.65;text-transform:uppercase;letter-spacing:.05em}\n.rover-center{display:flex;align-items:center;justify-content:center;font-size:32px}\n.dist-c .c-wait{opacity:.5;font-size:13px;text-align:center;margin-top:20px}\n</style>",
+        "storeOutMessages": true,
+        "passthru": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 880,
+        "y": 510,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "grp_energy",
+        "type": "ui-group",
+        "name": "Energia — INA219",
+        "page": "mp_page1",
+        "width": 3,
+        "height": "auto",
+        "order": 5,
+        "showTitle": false
+    },
+    {
+        "id": "tmpl_energy",
+        "type": "ui-template",
+        "z": "flow_mock",
+        "group": "grp_energy",
+        "name": "Card Energia",
+        "order": 1,
+        "width": 3,
+        "height": 5,
+        "format": "<template>\n  <div class=\"energy-c\">\n    <div class=\"c-title\"><v-icon>mdi-lightning-bolt-circle</v-icon> Energia &mdash; INA219</div>\n    <div v-if=\"msg && msg.payload\">\n      <div class=\"e-row\">\n        <v-icon :size=\"30\" :color=\"parseFloat(msg.payload.voltage)<11.1?'#ff6b6b':'#69db7c'\">mdi-car-battery</v-icon>\n        <div>\n          <div class=\"e-val\">{{ msg.payload.voltage }}<span class=\"e-unit\"> V</span></div>\n          <div class=\"e-lbl\">Tens&atilde;o</div>\n        </div>\n      </div>\n      <div class=\"e-row\">\n        <v-icon :size=\"30\" :color=\"parseFloat(msg.payload.current)>7?'#ff6b6b':'#ffd43b'\">mdi-current-dc</v-icon>\n        <div>\n          <div class=\"e-val\">{{ msg.payload.current }}<span class=\"e-unit\"> A</span></div>\n          <div class=\"e-lbl\">Corrente</div>\n        </div>\n      </div>\n      <div class=\"e-row\">\n        <v-icon :size=\"30\" :color=\"parseFloat(msg.payload.power)>100?'#ff6b6b':'#a78bfa'\">mdi-flash</v-icon>\n        <div>\n          <div class=\"e-val\">{{ msg.payload.power }}<span class=\"e-unit\"> W</span></div>\n          <div class=\"e-lbl\">Pot&ecirc;ncia</div>\n        </div>\n      </div>\n    </div>\n    <div v-else class=\"c-wait\">&#x23F3; Aguardando INA219...</div>\n  </div>\n</template>\n<style>\n.energy-c{background:linear-gradient(160deg,#1c1a0e,#2d2a0f);border-left:4px solid #ffd43b;border-radius:12px;padding:16px;color:#fff;min-height:130px}\n.energy-c .c-title{font-size:13px;font-weight:600;opacity:.8;margin-bottom:14px;display:flex;align-items:center;gap:6px}\n.e-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}\n.e-val{font-size:20px;font-weight:700}\n.e-unit{font-size:13px;opacity:.7}\n.e-lbl{font-size:10px;opacity:.55;text-transform:uppercase;letter-spacing:.06em}\n.energy-c .c-wait{opacity:.5;font-size:13px;text-align:center;margin-top:20px}\n</style>",
+        "storeOutMessages": true,
+        "passthru": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 880,
+        "y": 730,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "grp_status",
+        "type": "ui-group",
+        "name": "Sistema",
+        "page": "mp_page1",
+        "width": 3,
+        "height": "auto",
+        "order": 4,
+        "showTitle": false
+    },
+    {
+        "id": "tmpl_status",
+        "type": "ui-template",
+        "z": "flow_mock",
+        "group": "grp_status",
+        "name": "Card Status",
+        "order": 1,
+        "width": 3,
+        "height": 5,
+        "format": "<template>\n  <div class=\"status-c\">\n    <div class=\"c-title\"><v-icon>mdi-robot</v-icon> Sistema &mdash; Status</div>\n    <div v-if=\"msg && msg.payload\">\n      <div class=\"mode-badge\"\n        :style=\"{background:msg.payload.mode==='MANUAL'?'rgba(116,192,252,.2)':'rgba(167,139,250,.2)',\n                 borderColor:msg.payload.mode==='MANUAL'?'#74c0fc':'#a78bfa'}\">\n        <v-icon :size=\"16\" :icon=\"msg.payload.mode==='MANUAL'?'mdi-gamepad-variant':'mdi-robot-outline'\"></v-icon>\n        {{ msg.payload.mode }}\n      </div>\n      <div class=\"conn-row\"\n        :style=\"{borderColor:msg.payload.connected?'#69db7c':'#ff6b6b',\n                 background:msg.payload.connected?'rgba(105,219,124,.08)':'rgba(255,107,107,.08)'}\"\n      >\n        <span class=\"conn-dot\" :style=\"{background:msg.payload.connected?'#69db7c':'#ff6b6b'}\"></span>\n        <v-icon :size=\"14\" :color=\"msg.payload.connected?'#69db7c':'#ff6b6b'\"\n          :icon=\"msg.payload.connected?'mdi-wifi':'mdi-wifi-off'\"></v-icon>\n        <span :style=\"{color:msg.payload.connected?'#69db7c':'#ff6b6b',fontWeight:600,fontSize:'12px'}\">\n          {{ msg.payload.connected ? 'Online' : 'Offline' }}\n        </span>\n        <span style=\"margin-left:auto;font-size:10px;opacity:.5\">MQTT</span>\n      </div>\n      <div class=\"conn-row\"\n        :style=\"{borderColor:msg.payload.cutting?'#ffd43b':'rgba(255,255,255,.2)',\n                 background:msg.payload.cutting?'rgba(255,212,59,.08)':'rgba(255,255,255,.04)'}\"\n      >\n        <v-icon :size=\"15\" :color=\"msg.payload.cutting?'#ffd43b':'rgba(255,255,255,.35)'\"\n          :icon=\"msg.payload.cutting?'mdi-scissors-cutting':'mdi-scissors-cutting'\"></v-icon>\n        <span :style=\"{color:msg.payload.cutting?'#ffd43b':'rgba(255,255,255,.35)',fontWeight:600,fontSize:'12px'}\">\n          Corte: {{ msg.payload.cutting ? 'Ativo' : 'Inativo' }}\n        </span>\n        <span style=\"margin-left:auto;font-size:10px;opacity:.4\">lâminas</span>\n      </div>\n      <div class=\"batt-wrap\">\n        <div class=\"batt-head\">\n          <v-icon :size=\"18\"\n            :color=\"msg.payload.battery<20?'#ff6b6b':msg.payload.battery<50?'#ffd43b':'#69db7c'\">\n            mdi-battery\n          </v-icon>\n          <span style=\"font-size:13px\">Bateria</span>\n          <span class=\"batt-pct\">{{ msg.payload.battery }}%</span>\n        </div>\n        <div class=\"batt-bg\">\n          <div class=\"batt-fill\"\n            :style=\"{width:msg.payload.battery+'%',\n                     background:msg.payload.battery<20?'#ff6b6b':msg.payload.battery<50?'#ffd43b':'#69db7c'}\">\n          </div>\n        </div>\n      </div>\n      <div class=\"alert-box\"\n        :style=\"{borderColor:msg.payload.alert!=='Nenhum alerta'?'#ff6b6b':'#69db7c',\n                 background:msg.payload.alert!=='Nenhum alerta'?'rgba(255,107,107,.1)':'rgba(105,219,124,.1)'}\">\n        <v-icon :size=\"16\"\n          :color=\"msg.payload.alert!=='Nenhum alerta'?'#ff6b6b':'#69db7c'\"\n          :icon=\"msg.payload.alert!=='Nenhum alerta'?'mdi-alert':'mdi-check-circle'\">\n        </v-icon>\n        {{ msg.payload.alert }}\n      </div>\n    </div>\n    <div v-else class=\"c-wait\">&#x23F3; Aguardando status...</div>\n  </div>\n</template>\n<style>\n.status-c{background:linear-gradient(160deg,#1a1a2e,#0d2137);border-left:4px solid #a78bfa;border-radius:12px;padding:16px;color:#fff;min-height:130px}\n.status-c .c-title{font-size:13px;font-weight:600;opacity:.8;margin-bottom:14px;display:flex;align-items:center;gap:6px}\n.mode-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;border:1px solid;font-size:13px;font-weight:600;margin-bottom:12px}\n.batt-wrap{margin-bottom:12px}\n.batt-head{display:flex;align-items:center;gap:6px;margin-bottom:6px}\n.batt-pct{margin-left:auto;font-weight:700;font-size:13px}\n.batt-bg{background:rgba(255,255,255,.1);border-radius:6px;height:10px;overflow:hidden}\n.batt-fill{height:100%;border-radius:6px;transition:width .5s ease,background .3s}\n.alert-box{padding:8px 10px;border-radius:8px;border:1px solid;font-size:12px;display:flex;align-items:center;gap:6px}\n.status-c .c-wait{opacity:.5;font-size:13px;text-align:center;margin-top:20px}\n.conn-row{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:8px;border:1px solid;margin-bottom:10px;font-size:12px}\n.conn-dot{width:7px;height:7px;border-radius:50%;animation:pulse 1.5s infinite}\n@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}\n</style>",
+        "storeOutMessages": true,
+        "passthru": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 880,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "type": "comment",
+        "z": "flow_mock",
+        "info": "",
+        "wires": [],
+        "id": "cmt_oper",
+        "name": "⚙️  Dashboard · Operação — Velocidade / Área / Consumo",
+        "x": 60,
+        "y": 1100
+    },
+    {
+        "id": "grp_oper",
+        "type": "ui-group",
+        "name": "Operação",
+        "page": "mp_page1",
+        "width": 12,
+        "height": "auto",
+        "order": 6,
+        "showTitle": false
+    },
+    {
+        "id": "tmpl_oper",
+        "type": "ui-template",
+        "z": "flow_mock",
+        "group": "grp_oper",
+        "name": "Card Operação",
+        "order": 1,
+        "width": 12,
+        "height": 4,
+        "templateScope": "local",
+        "storeOutMessages": true,
+        "passthru": false,
+        "className": "",
+        "format": "<template>\n  <div class=\"oper-c\">\n    <div class=\"c-title\"><v-icon>mdi-chart-timeline-variant</v-icon> Opera&ccedil;&atilde;o</div>\n    <div v-if=\"msg && msg.payload\" class=\"oper-row\">\n\n      <div class=\"oper-item\">\n        <v-icon :size=\"32\" color=\"#74c0fc\">mdi-speedometer</v-icon>\n        <div class=\"oper-val\" style=\"color:#74c0fc\">\n          {{ msg.payload.velocity }}<span class=\"oper-unit\"> m/s</span>\n        </div>\n        <div class=\"oper-lbl\">Velocidade</div>\n      </div>\n\n      <div class=\"oper-sep\"></div>\n\n      <div class=\"oper-item\">\n        <v-icon :size=\"32\" color=\"#69db7c\">mdi-grass</v-icon>\n        <div class=\"oper-val\" style=\"color:#69db7c\">\n          {{ msg.payload.area.toLocaleString('pt-BR') }}<span class=\"oper-unit\"> m&sup2;</span>\n        </div>\n        <div class=\"oper-lbl\">&Aacute;rea Ro&ccedil;ada</div>\n      </div>\n\n      <div class=\"oper-sep\"></div>\n\n      <div class=\"oper-item\">\n        <v-icon :size=\"32\" :color=\"msg.payload.power>100?'#ff6b6b':'#ffd43b'\">mdi-lightning-bolt</v-icon>\n        <div class=\"oper-val\" :style=\"{color:msg.payload.power>100?'#ff6b6b':'#ffd43b'}\">\n          {{ msg.payload.power }}<span class=\"oper-unit\"> W</span>\n        </div>\n        <div class=\"oper-lbl\">Consumo</div>\n      </div>\n\n    </div>\n    <div v-else class=\"c-wait\">&#x23F3; Aguardando...</div>\n  </div>\n</template>\n<style>\n.oper-c{background:linear-gradient(160deg,#12122a,#1a1a2e);border-left:4px solid #a78bfa;border-radius:12px;padding:14px 20px;color:#fff}\n.oper-c .c-title{font-size:13px;font-weight:600;opacity:.8;margin-bottom:12px;display:flex;align-items:center;gap:6px}\n.oper-row{display:flex;justify-content:space-around;align-items:center}\n.oper-item{text-align:center;flex:1;padding:4px 0}\n.oper-sep{width:1px;height:60px;background:rgba(255,255,255,.1)}\n.oper-val{font-size:28px;font-weight:700;margin:6px 0 2px;line-height:1}\n.oper-unit{font-size:13px;opacity:.7;font-weight:400}\n.oper-lbl{font-size:10px;opacity:.55;text-transform:uppercase;letter-spacing:.06em}\n.oper-c .c-wait{opacity:.5;font-size:13px;text-align:center;margin-top:10px}\n</style>",
+        "x": 880,
+        "y": 1120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "type": "comment",
+        "z": "flow_mock",
+        "info": "",
+        "wires": [],
+        "id": "cmt_mapa",
+        "name": "🗺️  Dashboard · Mapa GPS — iframe + WebSocket + HTTP endpoint",
+        "x": 60,
+        "y": 1160
+    },
+    {
+        "id": "grp_map",
+        "type": "ui-group",
+        "name": "Mapa — Posição GPS",
+        "page": "mp_page1",
+        "width": 6,
+        "height": "auto",
+        "order": 8,
+        "showTitle": false
+    },
+    {
+        "id": "tmpl_map",
+        "type": "ui-template",
+        "z": "flow_mock",
+        "group": "grp_map",
+        "name": "Card Mapa",
+        "order": 1,
+        "width": 7,
+        "height": 6,
+        "templateScope": "local",
+        "storeOutMessages": true,
+        "passthru": false,
+        "className": "",
+        "format": "<template>\n  <div class=\"map-c\">\n    <div class=\"c-title\">\n      <v-icon>mdi-map-marker-radius</v-icon> Mapa &mdash; Posi&ccedil;&atilde;o GPS\n    </div>\n    <iframe src=\"/rover-map\" class=\"map-iframe\" allowfullscreen></iframe>\n    <div v-if=\"msg && msg.payload\" class=\"map-coords\">\n      &#x1F4CD; {{ msg.payload.lat }}, {{ msg.payload.lon }}\n    </div>\n  </div>\n</template>\n<style>\n.map-c { background: linear-gradient(160deg,#0d2137,#1a1a2e);\n         border-left: 4px solid #74c0fc; border-radius: 12px;\n         padding: 16px; color: #fff; }\n.map-c .c-title { font-size:13px; font-weight:600; opacity:.8;\n                  margin-bottom:10px; display:flex; align-items:center; gap:6px; }\n.map-iframe { width: 100%; height: 480px; border: none; border-radius: 10px; display: block; }\n.map-coords { font-size: 11px; opacity:.55; margin-top: 6px; text-align: center; }\n</style>",
+        "x": 880,
+        "y": 1060,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ws_config_map",
+        "type": "websocket-listener",
+        "path": "/ws/rover-map",
+        "wholemsg": "false"
+    },
+    {
+        "id": "ws_out_map",
+        "type": "websocket out",
+        "z": "flow_mock",
+        "name": "WS Mapa",
+        "server": "ws_config_map",
+        "client": "",
+        "x": 1100,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "http_in_map",
+        "type": "http in",
+        "z": "flow_mock",
+        "name": "GET /rover-map",
+        "url": "/rover-map",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 200,
+        "y": 1180,
+        "wires": [
+            [
+                "fn_map_html"
+            ]
+        ]
+    },
+    {
+        "id": "fn_map_html",
+        "type": "function",
+        "z": "flow_mock",
+        "name": "HTML Mapa",
+        "func": "msg.payload = \"<!DOCTYPE html>\\n<html>\\n<head>\\n  <meta charset=\\\"utf-8\\\">\\n  <meta name=\\\"viewport\\\" content=\\\"width=device-width,initial-scale=1\\\">\\n  <link rel=\\\"stylesheet\\\" href=\\\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.css\\\"/>\\n  <style>\\n    *{margin:0;padding:0;box-sizing:border-box}\\n    body{background:#0d2137;overflow:hidden}\\n    #map{width:100vw;height:100vh}\\n    .leaflet-container{background:#1a1a2e}\\n  </style>\\n</head>\\n<body>\\n  <div id=\\\"map\\\"></div>\\n  <script src=\\\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.js\\\"></script>\\n  <script>\\n    var map = L.map('map',{zoomControl:true,attributionControl:false})\\n               .setView([-23.2082,-46.8788],14);\\n    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',\\n                {maxZoom:19}).addTo(map);\\n    var icon = L.divIcon({html:'\\\\u{1F916}',className:'rv-ic',iconSize:[28,28],iconAnchor:[14,14]});\\n    var marker = L.marker([-23.5505,-46.6333],{icon:icon}).addTo(map);\\n    var trail=[], poly=L.polyline([],{color:'#74c0fc',weight:2,opacity:.8}).addTo(map);\\n\\n    function connect(){\\n      var ws=new WebSocket('ws://'+location.host+'/ws/rover-map');\\n      ws.onmessage=function(e){\\n        var p; try{p=JSON.parse(e.data);}catch(err){return;}\\n        if(p.lat==null||p.lon==null)return;\\n        var ll=[parseFloat(p.lat),parseFloat(p.lon)];\\n        if(isNaN(ll[0])||isNaN(ll[1]))return;\\n        marker.setLatLng(ll);\\n        trail.push(ll);\\n        if(trail.length>50)trail.shift();\\n        poly.setLatLngs(trail);\\n        if(trail.length===1)map.setView(ll,15);\\n      };\\n      ws.onclose=function(){setTimeout(connect,3000);};\\n    }\\n    connect();\\n  </script>\\n</body>\\n</html>\";\nmsg.headers = { 'content-type': 'text/html; charset=utf-8' };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "x": 420,
+        "y": 1180,
+        "wires": [
+            [
+                "http_resp_map"
+            ]
+        ]
+    },
+    {
+        "id": "http_resp_map",
+        "type": "http response",
+        "z": "flow_mock",
+        "name": "Resp Mapa",
+        "statusCode": "200",
+        "headers": {},
+        "x": 620,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "type": "comment",
+        "z": "flow_mock",
+        "info": "",
+        "wires": [],
+        "id": "cmt_bot",
+        "name": "🤖  Bot Telegram — receiver / switch / sender",
+        "x": 60,
+        "y": 1420
+    },
+    {
+        "id": "feea8bb349925d59",
+        "type": "comment",
+        "z": "flow_mock",
+        "name": "Sessão Bot Telegram",
+        "info": "",
+        "x": 180,
+        "y": 1100,
+        "wires": []
     },
     {
         "id": "7bd842c7024ea6cc",
@@ -319,563 +888,6 @@
             [
                 "2992c1913f7c724c"
             ]
-        ]
-    },
-    {
-        "id": "feea8bb349925d59",
-        "type": "comment",
-        "z": "flow_mock",
-        "name": "Sessão Bot Telegram",
-        "info": "",
-        "x": 180,
-        "y": 1100,
-        "wires": []
-    },
-    {
-        "id": "8f78fd64448fc181",
-        "type": "mqtt in",
-        "z": "flow_mock",
-        "name": "",
-        "topic": "perseverance/sensors",
-        "qos": "0",
-        "datatype": "auto-detect",
-        "broker": "aaf1a9af4ea2ff0d",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 180,
-        "y": 420,
-        "wires": [
-            [
-                "1f7fb05304f97bdd"
-            ]
-        ]
-    },
-    {
-        "id": "1f7fb05304f97bdd",
-        "type": "debug",
-        "z": "flow_mock",
-        "name": "test mqtt",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 400,
-        "y": 420,
-        "wires": []
-    },
-    {
-        "id": "grp_gps",
-        "type": "ui-group",
-        "name": "GPS — NEO-6M",
-        "page": "mp_page1",
-        "width": 6,
-        "height": "auto",
-        "order": 7,
-        "showTitle": false,
-        "visible": true,
-        "disabled": false
-    },
-    {
-        "id": "grp_imu",
-        "type": "ui-group",
-        "name": "IMU / Inclinação — MPU-6050",
-        "page": "mp_page1",
-        "width": 3,
-        "height": "auto",
-        "order": 3,
-        "showTitle": false
-    },
-    {
-        "id": "grp_dist",
-        "type": "ui-group",
-        "name": "Distâncias — HC-SR04 (cm)",
-        "page": "mp_page1",
-        "width": 2,
-        "height": "auto",
-        "order": 2,
-        "showTitle": false
-    },
-    {
-        "id": "grp_energy",
-        "type": "ui-group",
-        "name": "Energia — INA219",
-        "page": "mp_page1",
-        "width": 4,
-        "height": "auto",
-        "order": 5,
-        "showTitle": false
-    },
-    {
-        "id": "0dcc96db669d0d91",
-        "type": "ui-group",
-        "name": "Header",
-        "page": "mp_page1",
-        "width": 12,
-        "height": 2,
-        "order": 1,
-        "showTitle": false,
-        "className": "",
-        "visible": "true",
-        "disabled": "false",
-        "groupType": "default"
-    },
-    {
-        "id": "86082f33536f26e2",
-        "type": "telegram bot",
-        "botname": "MotivaRoverBot",
-        "usernames": "",
-        "chatids": "",
-        "baseapiurl": "",
-        "testenvironment": false,
-        "updatemode": "polling",
-        "pollinterval": 300,
-        "usesocks": false,
-        "sockshost": "",
-        "socksprotocol": "socks5",
-        "socksport": 6667,
-        "socksusername": "anonymous",
-        "sockspassword": "",
-        "bothost": "",
-        "botpath": "",
-        "localbothost": "0.0.0.0",
-        "localbotport": 8443,
-        "publicbotport": 8443,
-        "privatekey": "",
-        "certificate": "",
-        "useselfsignedcertificate": false,
-        "sslterminated": false,
-        "verboselogging": false
-    },
-    {
-        "id": "aaf1a9af4ea2ff0d",
-        "type": "mqtt-broker",
-        "name": "MQTT HiveMQ",
-        "broker": "broker.hivemq.com",
-        "port": "1883",
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": 4,
-        "keepalive": "60",
-        "cleansession": true,
-        "autoUnsubscribe": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
-    },
-    {
-        "id": "mp_page1",
-        "type": "ui-page",
-        "name": "Motiva Rover",
-        "ui": "fb026497e3258b13",
-        "path": "/motiva",
-        "icon": "mdi-satellite-uplink",
-        "layout": "grid",
-        "theme": "theme_enki",
-        "breakpoints": [
-            {
-                "name": "Default",
-                "px": "0",
-                "cols": "3"
-            },
-            {
-                "name": "Tablet",
-                "px": "576",
-                "cols": "6"
-            },
-            {
-                "name": "Small Desktop",
-                "px": "768",
-                "cols": "9"
-            },
-            {
-                "name": "Desktop",
-                "px": "1024",
-                "cols": "12"
-            }
-        ],
-        "order": 1,
-        "className": "",
-        "visible": "true",
-        "disabled": "false"
-    },
-    {
-        "id": "fb026497e3258b13",
-        "type": "ui-base",
-        "name": "My Dashboard",
-        "path": "/dashboard",
-        "appIcon": "https://fav.farm/🤖",
-        "includeClientData": true,
-        "acceptsClientConfig": [
-            "ui-notification",
-            "ui-control"
-        ],
-        "showPathInSidebar": false,
-        "headerContent": "page",
-        "navigationStyle": "default",
-        "titleBarStyle": "default",
-        "showReconnectNotification": true,
-        "notificationDisplayTime": 1,
-        "showDisconnectNotification": true,
-        "allowInstall": true
-    },
-    {
-        "id": "theme_enki",
-        "type": "ui-theme",
-        "name": "Henri Dark",
-        "colors": {
-            "surface": "#1f2937",
-            "primary": "#0094ce",
-            "bgPage": "#111827",
-            "groupBg": "#374151",
-            "groupOutline": "#4b5563"
-        },
-        "sizes": {
-            "density": "default",
-            "pagePadding": "12px",
-            "groupGap": "12px",
-            "groupBorderRadius": "8px",
-            "widgetGap": "12px"
-        }
-    },
-    {
-        "id": "8f5450163a94428d",
-        "type": "global-config",
-        "env": [],
-        "modules": {
-            "@flowfuse/node-red-dashboard": "1.30.2",
-            "node-red-contrib-telegrambot": "17.4.5"
-        }
-    },
-    {
-        "id": "mqtt_out_telem",
-        "type": "mqtt out",
-        "z": "flow_mock",
-        "name": "Pub Telemetria",
-        "topic": "perseverance/telemetry",
-        "qos": "0",
-        "retain": "false",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "aaf1a9af4ea2ff0d",
-        "x": 640,
-        "y": 340,
-        "wires": []
-    },
-    {
-        "id": "mqtt_out_status",
-        "type": "mqtt out",
-        "z": "flow_mock",
-        "name": "Pub Status",
-        "topic": "perseverance/status",
-        "qos": "0",
-        "retain": "false",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "aaf1a9af4ea2ff0d",
-        "x": 640,
-        "y": 840,
-        "wires": []
-    },
-    {
-        "id": "mqtt_in_telem",
-        "type": "mqtt in",
-        "z": "flow_mock",
-        "name": "Sub Telemetria",
-        "topic": "perseverance/telemetry",
-        "qos": "0",
-        "datatype": "json",
-        "broker": "aaf1a9af4ea2ff0d",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 200,
-        "y": 520,
-        "wires": [
-            [
-                "tmpl_gps",
-                "tmpl_imu",
-                "tmpl_dist",
-                "tmpl_energy",
-                "tmpl_map",
-                "ws_out_map",
-                "tmpl_oper"
-            ]
-        ]
-    },
-    {
-        "id": "mqtt_in_status",
-        "type": "mqtt in",
-        "z": "flow_mock",
-        "name": "Sub Status",
-        "topic": "perseverance/status",
-        "qos": "0",
-        "datatype": "json",
-        "broker": "aaf1a9af4ea2ff0d",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 200,
-        "y": 1000,
-        "wires": [
-            [
-                "tmpl_status"
-            ]
-        ]
-    },
-    {
-        "id": "grp_status",
-        "type": "ui-group",
-        "name": "Sistema",
-        "page": "mp_page1",
-        "width": 3,
-        "height": "auto",
-        "order": 4,
-        "showTitle": false
-    },
-    {
-        "id": "tmpl_gps",
-        "type": "ui-template",
-        "z": "flow_mock",
-        "group": "grp_gps",
-        "name": "Card GPS",
-        "order": 1,
-        "width": 3,
-        "height": 5,
-        "format": "<template>\n  <div class=\"gps-c\">\n    <div class=\"c-title\"><v-icon>mdi-map-marker-radius</v-icon> GPS &mdash; NEO-6M</div>\n    <div v-if=\"msg && msg.payload\">\n      <div class=\"c-row\">\n        <v-icon color=\"#74c0fc\" :size=\"30\">mdi-latitude</v-icon>\n        <div>\n          <div class=\"c-val\">{{ msg.payload.lat }}°</div>\n          <div class=\"c-lbl\">Latitude</div>\n        </div>\n      </div>\n      <div class=\"c-row\">\n        <v-icon color=\"#74c0fc\" :size=\"30\">mdi-longitude</v-icon>\n        <div>\n          <div class=\"c-val\">{{ msg.payload.lon }}°</div>\n          <div class=\"c-lbl\">Longitude</div>\n        </div>\n      </div>\n    </div>\n    <div v-else class=\"c-wait\">&#x23F3; Aguardando GPS...</div>\n  </div>\n</template>\n<style>\n.gps-c{background:linear-gradient(160deg,#1e3a5f,#0d2137);border-left:4px solid #74c0fc;border-radius:12px;padding:16px;color:#fff;min-height:130px}\n.gps-c .c-title{font-size:13px;font-weight:600;opacity:.8;margin-bottom:14px;display:flex;align-items:center;gap:6px}\n.gps-c .c-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}\n.gps-c .c-val{font-size:17px;font-weight:700}\n.gps-c .c-lbl{font-size:10px;opacity:.55;text-transform:uppercase;letter-spacing:.06em}\n.gps-c .c-wait{opacity:.5;font-size:13px;text-align:center;margin-top:20px}\n</style>",
-        "storeOutMessages": true,
-        "passthru": false,
-        "templateScope": "local",
-        "className": "",
-        "x": 880,
-        "y": 220,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "tmpl_imu",
-        "type": "ui-template",
-        "z": "flow_mock",
-        "group": "grp_imu",
-        "name": "Card IMU",
-        "order": 1,
-        "width": 3,
-        "height": 5,
-        "format": "<template>\n  <div class=\"imu-c\">\n    <div class=\"c-title\"><v-icon>mdi-rotate-3d-variant</v-icon> IMU &mdash; MPU-6050</div>\n    <div v-if=\"msg && msg.payload\" class=\"imu-row\">\n      <div class=\"imu-item\">\n        <v-icon :size=\"26\">mdi-axis-x-rotate-clockwise</v-icon>\n        <div class=\"imu-val\" :style=\"{color:Math.abs(parseFloat(msg.payload.roll))>20?'#ff6b6b':'#69db7c'}\">\n          {{ msg.payload.roll }}°\n        </div>\n        <div class=\"imu-lbl\">Roll</div>\n      </div>\n      <div class=\"imu-sep\"></div>\n      <div class=\"imu-item\">\n        <v-icon :size=\"26\">mdi-axis-y-rotate-clockwise</v-icon>\n        <div class=\"imu-val\" :style=\"{color:Math.abs(parseFloat(msg.payload.pitch))>20?'#ff6b6b':'#69db7c'}\">\n          {{ msg.payload.pitch }}°\n        </div>\n        <div class=\"imu-lbl\">Pitch</div>\n      </div>\n      <div class=\"imu-sep\"></div>\n      <div class=\"imu-item\">\n        <v-icon :size=\"26\">mdi-compass</v-icon>\n        <div class=\"imu-val\" style=\"color:#74c0fc\">{{ msg.payload.yaw }}°</div>\n        <div class=\"imu-lbl\">Yaw</div>\n      </div>\n    </div>\n    <div v-else class=\"c-wait\">&#x23F3; Aguardando IMU...</div>\n  </div>\n</template>\n<style>\n.imu-c{background:linear-gradient(160deg,#1a1a2e,#16213e);border-left:4px solid #a78bfa;border-radius:12px;padding:16px;color:#fff;min-height:130px}\n.imu-c .c-title{font-size:13px;font-weight:600;opacity:.8;margin-bottom:14px;display:flex;align-items:center;gap:6px}\n.imu-row{display:flex;justify-content:space-around;align-items:center;padding-top:4px}\n.imu-item{text-align:center;flex:1}\n.imu-sep{width:1px;height:48px;background:rgba(255,255,255,.1)}\n.imu-val{font-size:18px;font-weight:700;margin:4px 0 2px}\n.imu-lbl{font-size:10px;opacity:.55;text-transform:uppercase;letter-spacing:.06em}\n.imu-c .c-wait{opacity:.5;font-size:13px;text-align:center;margin-top:20px}\n</style>",
-        "storeOutMessages": true,
-        "passthru": false,
-        "templateScope": "local",
-        "className": "",
-        "x": 880,
-        "y": 340,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "tmpl_dist",
-        "type": "ui-template",
-        "z": "flow_mock",
-        "group": "grp_dist",
-        "name": "Card Distâncias",
-        "order": 1,
-        "width": 5,
-        "height": 10,
-        "format": "<template>\n  <div class=\"dist-c\">\n    <div class=\"c-title\"><v-icon>mdi-radar</v-icon> Dist&acirc;ncias &mdash; HC-SR04</div>\n    <div v-if=\"msg && msg.payload\" class=\"dist-grid\">\n      <div></div>\n      <div :class=\"['dist-cell', (msg.payload.d_front<30?'dc-danger':msg.payload.d_front<80?'dc-warn':'dc-ok')]\">\n        <v-icon :size=\"20\">mdi-arrow-up-bold</v-icon>\n        <div class=\"dc-val\">{{ msg.payload.d_front }}<span class=\"dc-unit\"> cm</span></div>\n        <div class=\"dc-lbl\">Frontal</div>\n      </div>\n      <div></div>\n      <div :class=\"['dist-cell', (msg.payload.d_left<30?'dc-danger':msg.payload.d_left<80?'dc-warn':'dc-ok')]\">\n        <v-icon :size=\"20\">mdi-arrow-left-bold</v-icon>\n        <div class=\"dc-val\">{{ msg.payload.d_left }}<span class=\"dc-unit\"> cm</span></div>\n        <div class=\"dc-lbl\">Esq.</div>\n      </div>\n      <div class=\"rover-center\">&#x1F916;</div>\n      <div :class=\"['dist-cell', (msg.payload.d_right<30?'dc-danger':msg.payload.d_right<80?'dc-warn':'dc-ok')]\">\n        <v-icon :size=\"20\">mdi-arrow-right-bold</v-icon>\n        <div class=\"dc-val\">{{ msg.payload.d_right }}<span class=\"dc-unit\"> cm</span></div>\n        <div class=\"dc-lbl\">Dir.</div>\n      </div>\n      <div></div>\n      <div :class=\"['dist-cell', (msg.payload.d_rear<30?'dc-danger':msg.payload.d_rear<80?'dc-warn':'dc-ok')]\">\n        <v-icon :size=\"20\">mdi-arrow-down-bold</v-icon>\n        <div class=\"dc-val\">{{ msg.payload.d_rear }}<span class=\"dc-unit\"> cm</span></div>\n        <div class=\"dc-lbl\">Traseiro</div>\n      </div>\n      <div></div>\n    </div>\n    <div v-else class=\"c-wait\">&#x23F3; Aguardando sensores...</div>\n  </div>\n</template>\n<style>\n.dist-c{background:linear-gradient(160deg,#0d2137,#1a1a2e);border-left:4px solid #69db7c;border-radius:12px;padding:16px;color:#fff}\n.dist-c .c-title{font-size:13px;font-weight:600;opacity:.8;margin-bottom:14px;display:flex;align-items:center;gap:6px}\n.dist-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;max-width:400px;margin:0 auto}\n.dist-cell{text-align:center;padding:10px 6px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:3px}\n.dc-ok{background:rgba(105,219,124,.15);color:#69db7c}\n.dc-warn{background:rgba(255,212,59,.15);color:#ffd43b}\n.dc-danger{background:rgba(255,107,107,.2);color:#ff6b6b}\n.dc-val{font-size:18px;font-weight:700}\n.dc-unit{font-size:11px;opacity:.7}\n.dc-lbl{font-size:10px;opacity:.65;text-transform:uppercase;letter-spacing:.05em}\n.rover-center{display:flex;align-items:center;justify-content:center;font-size:32px}\n.dist-c .c-wait{opacity:.5;font-size:13px;text-align:center;margin-top:20px}\n</style>",
-        "storeOutMessages": true,
-        "passthru": false,
-        "templateScope": "local",
-        "className": "",
-        "x": 880,
-        "y": 510,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "tmpl_energy",
-        "type": "ui-template",
-        "z": "flow_mock",
-        "group": "grp_energy",
-        "name": "Card Energia",
-        "order": 1,
-        "width": 3,
-        "height": 5,
-        "format": "<template>\n  <div class=\"energy-c\">\n    <div class=\"c-title\"><v-icon>mdi-lightning-bolt-circle</v-icon> Energia &mdash; INA219</div>\n    <div v-if=\"msg && msg.payload\">\n      <div class=\"e-row\">\n        <v-icon :size=\"30\" :color=\"parseFloat(msg.payload.voltage)<11.1?'#ff6b6b':'#69db7c'\">mdi-car-battery</v-icon>\n        <div>\n          <div class=\"e-val\">{{ msg.payload.voltage }}<span class=\"e-unit\"> V</span></div>\n          <div class=\"e-lbl\">Tens&atilde;o</div>\n        </div>\n      </div>\n      <div class=\"e-row\">\n        <v-icon :size=\"30\" :color=\"parseFloat(msg.payload.current)>7?'#ff6b6b':'#ffd43b'\">mdi-current-dc</v-icon>\n        <div>\n          <div class=\"e-val\">{{ msg.payload.current }}<span class=\"e-unit\"> A</span></div>\n          <div class=\"e-lbl\">Corrente</div>\n        </div>\n      </div>\n      <div class=\"e-row\">\n        <v-icon :size=\"30\" :color=\"parseFloat(msg.payload.power)>100?'#ff6b6b':'#a78bfa'\">mdi-flash</v-icon>\n        <div>\n          <div class=\"e-val\">{{ msg.payload.power }}<span class=\"e-unit\"> W</span></div>\n          <div class=\"e-lbl\">Pot&ecirc;ncia</div>\n        </div>\n      </div>\n    </div>\n    <div v-else class=\"c-wait\">&#x23F3; Aguardando INA219...</div>\n  </div>\n</template>\n<style>\n.energy-c{background:linear-gradient(160deg,#1c1a0e,#2d2a0f);border-left:4px solid #ffd43b;border-radius:12px;padding:16px;color:#fff;min-height:130px}\n.energy-c .c-title{font-size:13px;font-weight:600;opacity:.8;margin-bottom:14px;display:flex;align-items:center;gap:6px}\n.e-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}\n.e-val{font-size:20px;font-weight:700}\n.e-unit{font-size:13px;opacity:.7}\n.e-lbl{font-size:10px;opacity:.55;text-transform:uppercase;letter-spacing:.06em}\n.energy-c .c-wait{opacity:.5;font-size:13px;text-align:center;margin-top:20px}\n</style>",
-        "storeOutMessages": true,
-        "passthru": false,
-        "templateScope": "local",
-        "className": "",
-        "x": 880,
-        "y": 730,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "tmpl_status",
-        "type": "ui-template",
-        "z": "flow_mock",
-        "group": "grp_status",
-        "name": "Card Status",
-        "order": 1,
-        "width": 3,
-        "height": 5,
-        "format": "<template>\n  <div class=\"status-c\">\n    <div class=\"c-title\"><v-icon>mdi-robot</v-icon> Sistema &mdash; Status</div>\n    <div v-if=\"msg && msg.payload\">\n      <div class=\"mode-badge\"\n        :style=\"{background:msg.payload.mode==='MANUAL'?'rgba(116,192,252,.2)':'rgba(167,139,250,.2)',\n                 borderColor:msg.payload.mode==='MANUAL'?'#74c0fc':'#a78bfa'}\">\n        <v-icon :size=\"16\" :icon=\"msg.payload.mode==='MANUAL'?'mdi-gamepad-variant':'mdi-robot-outline'\"></v-icon>\n        {{ msg.payload.mode }}\n      </div>\n      <div class=\"conn-row\"\n        :style=\"{borderColor:msg.payload.connected?'#69db7c':'#ff6b6b',\n                 background:msg.payload.connected?'rgba(105,219,124,.08)':'rgba(255,107,107,.08)'}\"\n      >\n        <span class=\"conn-dot\" :style=\"{background:msg.payload.connected?'#69db7c':'#ff6b6b'}\"></span>\n        <v-icon :size=\"14\" :color=\"msg.payload.connected?'#69db7c':'#ff6b6b'\"\n          :icon=\"msg.payload.connected?'mdi-wifi':'mdi-wifi-off'\"></v-icon>\n        <span :style=\"{color:msg.payload.connected?'#69db7c':'#ff6b6b',fontWeight:600,fontSize:'12px'}\">\n          {{ msg.payload.connected ? 'Online' : 'Offline' }}\n        </span>\n        <span style=\"margin-left:auto;font-size:10px;opacity:.5\">MQTT</span>\n      </div>\n      <div class=\"conn-row\"\n        :style=\"{borderColor:msg.payload.cutting?'#ffd43b':'rgba(255,255,255,.2)',\n                 background:msg.payload.cutting?'rgba(255,212,59,.08)':'rgba(255,255,255,.04)'}\"\n      >\n        <v-icon :size=\"15\" :color=\"msg.payload.cutting?'#ffd43b':'rgba(255,255,255,.35)'\"\n          :icon=\"msg.payload.cutting?'mdi-scissors-cutting':'mdi-scissors-cutting'\"></v-icon>\n        <span :style=\"{color:msg.payload.cutting?'#ffd43b':'rgba(255,255,255,.35)',fontWeight:600,fontSize:'12px'}\">\n          Corte: {{ msg.payload.cutting ? 'Ativo' : 'Inativo' }}\n        </span>\n        <span style=\"margin-left:auto;font-size:10px;opacity:.4\">lâminas</span>\n      </div>\n      <div class=\"batt-wrap\">\n        <div class=\"batt-head\">\n          <v-icon :size=\"18\"\n            :color=\"msg.payload.battery<20?'#ff6b6b':msg.payload.battery<50?'#ffd43b':'#69db7c'\">\n            mdi-battery\n          </v-icon>\n          <span style=\"font-size:13px\">Bateria</span>\n          <span class=\"batt-pct\">{{ msg.payload.battery }}%</span>\n        </div>\n        <div class=\"batt-bg\">\n          <div class=\"batt-fill\"\n            :style=\"{width:msg.payload.battery+'%',\n                     background:msg.payload.battery<20?'#ff6b6b':msg.payload.battery<50?'#ffd43b':'#69db7c'}\">\n          </div>\n        </div>\n      </div>\n      <div class=\"alert-box\"\n        :style=\"{borderColor:msg.payload.alert!=='Nenhum alerta'?'#ff6b6b':'#69db7c',\n                 background:msg.payload.alert!=='Nenhum alerta'?'rgba(255,107,107,.1)':'rgba(105,219,124,.1)'}\">\n        <v-icon :size=\"16\"\n          :color=\"msg.payload.alert!=='Nenhum alerta'?'#ff6b6b':'#69db7c'\"\n          :icon=\"msg.payload.alert!=='Nenhum alerta'?'mdi-alert':'mdi-check-circle'\">\n        </v-icon>\n        {{ msg.payload.alert }}\n      </div>\n    </div>\n    <div v-else class=\"c-wait\">&#x23F3; Aguardando status...</div>\n  </div>\n</template>\n<style>\n.status-c{background:linear-gradient(160deg,#1a1a2e,#0d2137);border-left:4px solid #a78bfa;border-radius:12px;padding:16px;color:#fff;min-height:130px}\n.status-c .c-title{font-size:13px;font-weight:600;opacity:.8;margin-bottom:14px;display:flex;align-items:center;gap:6px}\n.mode-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;border:1px solid;font-size:13px;font-weight:600;margin-bottom:12px}\n.batt-wrap{margin-bottom:12px}\n.batt-head{display:flex;align-items:center;gap:6px;margin-bottom:6px}\n.batt-pct{margin-left:auto;font-weight:700;font-size:13px}\n.batt-bg{background:rgba(255,255,255,.1);border-radius:6px;height:10px;overflow:hidden}\n.batt-fill{height:100%;border-radius:6px;transition:width .5s ease,background .3s}\n.alert-box{padding:8px 10px;border-radius:8px;border:1px solid;font-size:12px;display:flex;align-items:center;gap:6px}\n.status-c .c-wait{opacity:.5;font-size:13px;text-align:center;margin-top:20px}\n.conn-row{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:8px;border:1px solid;margin-bottom:10px;font-size:12px}\n.conn-dot{width:7px;height:7px;border-radius:50%;animation:pulse 1.5s infinite}\n@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}\n</style>",
-        "storeOutMessages": true,
-        "passthru": false,
-        "templateScope": "local",
-        "className": "",
-        "x": 880,
-        "y": 900,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "grp_map",
-        "type": "ui-group",
-        "name": "Mapa — Posição GPS",
-        "page": "mp_page1",
-        "width": 6,
-        "height": "auto",
-        "order": 8,
-        "showTitle": false
-    },
-    {
-        "id": "tmpl_map",
-        "type": "ui-template",
-        "z": "flow_mock",
-        "group": "grp_map",
-        "name": "Card Mapa",
-        "order": 1,
-        "width": 7,
-        "height": 6,
-        "templateScope": "local",
-        "storeOutMessages": true,
-        "passthru": false,
-        "className": "",
-        "format": "<template>\n  <div class=\"map-c\">\n    <div class=\"c-title\">\n      <v-icon>mdi-map-marker-radius</v-icon> Mapa &mdash; Posi&ccedil;&atilde;o GPS\n    </div>\n    <iframe src=\"/rover-map\" class=\"map-iframe\" allowfullscreen></iframe>\n    <div v-if=\"msg && msg.payload\" class=\"map-coords\">\n      &#x1F4CD; {{ msg.payload.lat }}, {{ msg.payload.lon }}\n    </div>\n  </div>\n</template>\n<style>\n.map-c { background: linear-gradient(160deg,#0d2137,#1a1a2e);\n         border-left: 4px solid #74c0fc; border-radius: 12px;\n         padding: 16px; color: #fff; }\n.map-c .c-title { font-size:13px; font-weight:600; opacity:.8;\n                  margin-bottom:10px; display:flex; align-items:center; gap:6px; }\n.map-iframe { width: 100%; height: 480px; border: none; border-radius: 10px; display: block; }\n.map-coords { font-size: 11px; opacity:.55; margin-top: 6px; text-align: center; }\n</style>",
-        "x": 880,
-        "y": 1060,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "ws_config_map",
-        "type": "websocket-listener",
-        "path": "/ws/rover-map",
-        "wholemsg": "false"
-    },
-    {
-        "id": "ws_out_map",
-        "type": "websocket out",
-        "z": "flow_mock",
-        "name": "WS Mapa",
-        "server": "ws_config_map",
-        "client": "",
-        "x": 1100,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "http_in_map",
-        "type": "http in",
-        "z": "flow_mock",
-        "name": "GET /rover-map",
-        "url": "/rover-map",
-        "method": "get",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 200,
-        "y": 1180,
-        "wires": [
-            [
-                "fn_map_html"
-            ]
-        ]
-    },
-    {
-        "id": "fn_map_html",
-        "type": "function",
-        "z": "flow_mock",
-        "name": "HTML Mapa",
-        "func": "msg.payload = \"<!DOCTYPE html>\\n<html>\\n<head>\\n  <meta charset=\\\"utf-8\\\">\\n  <meta name=\\\"viewport\\\" content=\\\"width=device-width,initial-scale=1\\\">\\n  <link rel=\\\"stylesheet\\\" href=\\\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.css\\\"/>\\n  <style>\\n    *{margin:0;padding:0;box-sizing:border-box}\\n    body{background:#0d2137;overflow:hidden}\\n    #map{width:100vw;height:100vh}\\n    .leaflet-container{background:#1a1a2e}\\n  </style>\\n</head>\\n<body>\\n  <div id=\\\"map\\\"></div>\\n  <script src=\\\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.js\\\"></script>\\n  <script>\\n    var map = L.map('map',{zoomControl:true,attributionControl:false})\\n               .setView([-23.2082,-46.8788],14);\\n    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',\\n                {maxZoom:19}).addTo(map);\\n    var icon = L.divIcon({html:'\\\\u{1F916}',className:'rv-ic',iconSize:[28,28],iconAnchor:[14,14]});\\n    var marker = L.marker([-23.5505,-46.6333],{icon:icon}).addTo(map);\\n    var trail=[], poly=L.polyline([],{color:'#74c0fc',weight:2,opacity:.8}).addTo(map);\\n\\n    function connect(){\\n      var ws=new WebSocket('ws://'+location.host+'/ws/rover-map');\\n      ws.onmessage=function(e){\\n        var p; try{p=JSON.parse(e.data);}catch(err){return;}\\n        if(p.lat==null||p.lon==null)return;\\n        var ll=[parseFloat(p.lat),parseFloat(p.lon)];\\n        if(isNaN(ll[0])||isNaN(ll[1]))return;\\n        marker.setLatLng(ll);\\n        trail.push(ll);\\n        if(trail.length>50)trail.shift();\\n        poly.setLatLngs(trail);\\n        if(trail.length===1)map.setView(ll,15);\\n      };\\n      ws.onclose=function(){setTimeout(connect,3000);};\\n    }\\n    connect();\\n  </script>\\n</body>\\n</html>\";\nmsg.headers = { 'content-type': 'text/html; charset=utf-8' };\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "x": 420,
-        "y": 1180,
-        "wires": [
-            [
-                "http_resp_map"
-            ]
-        ]
-    },
-    {
-        "id": "http_resp_map",
-        "type": "http response",
-        "z": "flow_mock",
-        "name": "Resp Mapa",
-        "statusCode": "200",
-        "headers": {},
-        "x": 620,
-        "y": 1180,
-        "wires": []
-    },
-    {
-        "id": "grp_oper",
-        "type": "ui-group",
-        "name": "Operação",
-        "page": "mp_page1",
-        "width": 12,
-        "height": "auto",
-        "order": 6,
-        "showTitle": false
-    },
-    {
-        "id": "tmpl_oper",
-        "type": "ui-template",
-        "z": "flow_mock",
-        "group": "grp_oper",
-        "name": "Card Operação",
-        "order": 1,
-        "width": 12,
-        "height": 4,
-        "templateScope": "local",
-        "storeOutMessages": true,
-        "passthru": false,
-        "className": "",
-        "format": "<template>\n  <div class=\"oper-c\">\n    <div class=\"c-title\"><v-icon>mdi-chart-timeline-variant</v-icon> Opera&ccedil;&atilde;o</div>\n    <div v-if=\"msg && msg.payload\" class=\"oper-row\">\n\n      <div class=\"oper-item\">\n        <v-icon :size=\"32\" color=\"#74c0fc\">mdi-speedometer</v-icon>\n        <div class=\"oper-val\" style=\"color:#74c0fc\">\n          {{ msg.payload.velocity }}<span class=\"oper-unit\"> m/s</span>\n        </div>\n        <div class=\"oper-lbl\">Velocidade</div>\n      </div>\n\n      <div class=\"oper-sep\"></div>\n\n      <div class=\"oper-item\">\n        <v-icon :size=\"32\" color=\"#69db7c\">mdi-grass</v-icon>\n        <div class=\"oper-val\" style=\"color:#69db7c\">\n          {{ msg.payload.area.toLocaleString('pt-BR') }}<span class=\"oper-unit\"> m&sup2;</span>\n        </div>\n        <div class=\"oper-lbl\">&Aacute;rea Ro&ccedil;ada</div>\n      </div>\n\n      <div class=\"oper-sep\"></div>\n\n      <div class=\"oper-item\">\n        <v-icon :size=\"32\" :color=\"msg.payload.power>100?'#ff6b6b':'#ffd43b'\">mdi-lightning-bolt</v-icon>\n        <div class=\"oper-val\" :style=\"{color:msg.payload.power>100?'#ff6b6b':'#ffd43b'}\">\n          {{ msg.payload.power }}<span class=\"oper-unit\"> W</span>\n        </div>\n        <div class=\"oper-lbl\">Consumo</div>\n      </div>\n\n    </div>\n    <div v-else class=\"c-wait\">&#x23F3; Aguardando...</div>\n  </div>\n</template>\n<style>\n.oper-c{background:linear-gradient(160deg,#12122a,#1a1a2e);border-left:4px solid #a78bfa;border-radius:12px;padding:14px 20px;color:#fff}\n.oper-c .c-title{font-size:13px;font-weight:600;opacity:.8;margin-bottom:12px;display:flex;align-items:center;gap:6px}\n.oper-row{display:flex;justify-content:space-around;align-items:center}\n.oper-item{text-align:center;flex:1;padding:4px 0}\n.oper-sep{width:1px;height:60px;background:rgba(255,255,255,.1)}\n.oper-val{font-size:28px;font-weight:700;margin:6px 0 2px;line-height:1}\n.oper-unit{font-size:13px;opacity:.7;font-weight:400}\n.oper-lbl{font-size:10px;opacity:.55;text-transform:uppercase;letter-spacing:.06em}\n.oper-c .c-wait{opacity:.5;font-size:13px;text-align:center;margin-top:10px}\n</style>",
-        "x": 880,
-        "y": 1120,
-        "wires": [
-            []
         ]
     }
 ]
