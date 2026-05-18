@@ -3,7 +3,7 @@ const http = require('http');
 const fs   = require('fs');
 const path = require('path');
 
-const FLOWS_FILE = path.join(__dirname, 'flows', 'flows.json');
+const FLOWS_FILE = path.join(__dirname, '..', 'flows', 'flows.json');
 
 const MAP_TPL = `<template>
   <div class="map-c">

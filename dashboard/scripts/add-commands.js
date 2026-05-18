@@ -2,7 +2,7 @@
 const fs   = require('fs');
 const http = require('http');
 const path = require('path');
-const FLOWS_FILE = path.join(__dirname, 'flows', 'flows.json');
+const FLOWS_FILE = path.join(__dirname, '..', 'flows', 'flows.json');
 
 let f = JSON.parse(fs.readFileSync(FLOWS_FILE, 'utf8'));
 
